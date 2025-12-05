@@ -1,0 +1,56 @@
+---
+# ==============================================================================
+# Ahab Module: Common Configuration
+# ==============================================================================
+# Base system configuration settings
+#
+# This file contains all configurable options for the common module.
+# Edit these values to customize the module for your environment.
+
+common:
+  # User Configuration
+  # The user account that will be configured with sudo access and SSH keys
+  user: "{{ ansible_user }}"
+  
+  # SSH Configuration
+  # Path to your SSH public key file (will be deployed to target hosts)
+  ssh_key: "~/.ssh/id_ed25519.pub"
+  
+  # Time Configuration
+  # Timezone for all managed hosts (use standard timezone names)
+  # Examples: America/New_York, Europe/London, Asia/Tokyo, UTC
+  timezone: "America/New_York"
+  
+  # Package Management
+  # Packages to remove from target systems (distribution-specific packages)
+  packages_to_remove:
+    - elisa          # KDE media player (often unwanted on servers)
+    - transmission   # BitTorrent client (often unwanted on servers)
+  
+  # Essential packages to install on all systems
+  packages_to_install:
+    - git            # Version control
+    - htop           # Interactive process viewer
+    - iperf3         # Network performance testing
+    - rsync          # File synchronization
+    - screen         # Terminal multiplexer
+    - wget           # File downloader
+    - curl           # HTTP client
+    - vim            # Text editor
+    - net-tools      # Network utilities
+    - bind-utils     # DNS utilities (dig, nslookup)
+
+# Advanced Configuration (rarely needs changes)
+advanced:
+  # SELinux configuration (RedHat family only)
+  selinux_enabled: true
+  
+  # Firewall configuration (RedHat family only)
+  firewall_enabled: false
+  
+  # Chrony NTP servers (leave empty to use distribution defaults)
+  ntp_servers: []
+  # Example custom NTP servers:
+  # ntp_servers:
+  #   - 0.pool.ntp.org
+  #   - 1.pool.ntp.org

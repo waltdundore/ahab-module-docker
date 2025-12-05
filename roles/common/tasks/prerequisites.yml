@@ -1,0 +1,27 @@
+---
+# ==============================================================================
+# System Prerequisites
+# ==============================================================================
+# Install required packages and configure system settings
+
+- name: Install SELinux Python bindings (RedHat family)
+  ansible.builtin.package:
+    name: python3-libselinux
+    state: present
+  when: ansible_facts['os_family'] | lower == 'redhat'
+
+- name: Stop and disable firewalld service
+  ansible.builtin.service:
+    name: firewalld
+    state: stopped
+    enabled: false
+  when: ansible_facts['os_family'] | lower == 'redhat'
+  tags: firewall
+
+- name: Configure sudo access for user
+  ansible.builtin.template:
+    src: sudoers_user.j2
+    dest: /etc/sudoers.d/10_{{ common_user }}
+    mode: '0440'
+    validate: /usr/sbin/visudo -cf %s
+  when: common_user is defined

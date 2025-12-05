@@ -1,0 +1,28 @@
+---
+# ==============================================================================
+# Common Role Default Variables
+# ==============================================================================
+# These variables load from the module's config.yml
+# Edit config.yml in the module root instead of this file
+
+# Load configuration from module config.yml
+common_config: "{{ lookup('file', playbook_dir + '/../config.yml') | from_yaml }}"
+
+# User Configuration
+common_user: "{{ common_config.common.user | default(ansible_user) }}"
+common_home: "/home/{{ common_user }}"
+
+# SSH Configuration
+common_ssh_key: "{{ common_config.common.ssh_key | default('~/.ssh/id_ed25519.pub') }}"
+
+# Time Configuration
+common_timezone: "{{ common_config.common.timezone | default('America/New_York') }}"
+
+# Package Management
+packages_to_remove: "{{ common_config.common.packages_to_remove | default([]) }}"
+packages_to_install: "{{ common_config.common.packages_to_install | default([]) }}"
+
+# Advanced Configuration
+selinux_enabled: "{{ common_config.advanced.selinux_enabled | default(true) }}"
+firewall_enabled: "{{ common_config.advanced.firewall_enabled | default(false) }}"
+ntp_servers: "{{ common_config.advanced.ntp_servers | default([]) }}"

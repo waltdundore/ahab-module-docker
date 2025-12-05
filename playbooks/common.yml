@@ -1,0 +1,21 @@
+---
+# ==============================================================================
+# Ahab Module: Common Playbook
+# ==============================================================================
+# Applies base system configuration to all nodes
+#
+# Usage:
+#   ansible-playbook -i /path/to/inventory playbooks/common.yml
+#
+# This playbook can be run standalone or included in other playbooks
+
+- name: Apply common base configuration
+  hosts: all
+  become: true
+  
+  vars_files:
+    - ../config.yml
+  
+  roles:
+    - role: ../roles/common
+      tags: common
