@@ -1,0 +1,44 @@
+---
+# ==============================================================================
+# Ahab Module: Docker Configuration
+# ==============================================================================
+# Docker Engine installation and configuration settings
+#
+# This file contains all configurable options for the Docker module.
+# Edit these values to customize the module for your environment.
+
+docker:
+  # Repository Configuration
+  # Use official Docker repositories (recommended for latest versions)
+  # Set to false to use distribution-provided packages (may be older)
+  use_official_repo: true
+  
+  # User Configuration
+  # Users to add to the docker group (allows running docker without sudo)
+  # SECURITY NOTE: Users in docker group have root-equivalent access
+  users:
+    - vagrant
+  
+  # Add your users here:
+  # users:
+  #   - alice
+  #   - bob
+
+# Advanced Configuration (rarely needs changes)
+advanced:
+  # Docker Official Repository Configuration (Debian/Ubuntu)
+  apt_keyring_url: "https://download.docker.com/linux/debian/gpg"
+  apt_keyring_path: "/usr/share/keyrings/docker-archive-keyring.gpg"
+  apt_keyring_hash: "1500c1f56fa9e26b9b8f42452a553675796ade0807cdce11975eb98170b3a570"
+  apt_repo_url: "https://download.docker.com/linux/debian"
+  
+  # Docker Official Repository Configuration (Fedora/RedHat)
+  yum_gpg_url: "https://download.docker.com/linux/fedora/gpg"
+  yum_repo_url: "https://download.docker.com/linux/fedora"
+  
+  # Service Configuration
+  docker_service_enabled: true
+  docker_service_state: "started"
+  
+  # Verification
+  verify_installation: true

@@ -1,0 +1,21 @@
+---
+# ==============================================================================
+# Ahab Module: Docker Playbook
+# ==============================================================================
+# Installs and configures Docker Engine
+#
+# Usage:
+#   ansible-playbook -i /path/to/inventory playbooks/docker.yml
+#
+# This playbook can be run standalone or included in other playbooks
+
+- name: Install and configure Docker Engine
+  hosts: all
+  become: true
+  
+  vars_files:
+    - ../config.yml
+  
+  roles:
+    - role: ../roles/docker
+      tags: docker

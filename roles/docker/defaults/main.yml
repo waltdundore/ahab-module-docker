@@ -1,0 +1,26 @@
+---
+# ==============================================================================
+# Docker Role Default Variables
+# ==============================================================================
+# These variables load from the module's config.yml
+# Edit config.yml in the module root instead of this file
+
+# Load configuration from module config.yml
+docker_config: "{{ lookup('file', playbook_dir + '/../config.yml') | from_yaml }}"
+
+# Repository Configuration
+docker_use_official_repo: "{{ docker_config.docker.use_official_repo | default(true) }}"
+
+# User Configuration
+docker_users: "{{ docker_config.docker.users | default(['vagrant']) }}"
+
+# Advanced Configuration
+docker_apt_keyring_url: "{{ docker_config.advanced.apt_keyring_url | default('https://download.docker.com/linux/debian/gpg') }}"
+docker_apt_keyring_path: "{{ docker_config.advanced.apt_keyring_path | default('/usr/share/keyrings/docker-archive-keyring.gpg') }}"
+docker_apt_keyring_hash: "{{ docker_config.advanced.apt_keyring_hash | default('1500c1f56fa9e26b9b8f42452a553675796ade0807cdce11975eb98170b3a570') }}"
+docker_apt_repo_url: "{{ docker_config.advanced.apt_repo_url | default('https://download.docker.com/linux/debian') }}"
+docker_yum_gpg_url: "{{ docker_config.advanced.yum_gpg_url | default('https://download.docker.com/linux/fedora/gpg') }}"
+docker_yum_repo_url: "{{ docker_config.advanced.yum_repo_url | default('https://download.docker.com/linux/fedora') }}"
+docker_service_enabled: "{{ docker_config.advanced.docker_service_enabled | default(true) }}"
+docker_service_state: "{{ docker_config.advanced.docker_service_state | default('started') }}"
+docker_verify_installation: "{{ docker_config.advanced.verify_installation | default(true) }}"
