@@ -13,8 +13,27 @@
   hosts: all
   become: true
   
-  vars_files:
-    - ../config.yml
+  pre_tasks:
+    - name: Load module configuration
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/../config.yml"
+      tags: always
+    
+    - name: Set docker variables from config
+      ansible.builtin.set_fact:
+        docker_use_official_repo: "{{ docker.use_official_repo | default(true) }}"
+        docker_users: "{{ docker.users | default(['vagrant']) }}"
+        docker_apt_keyring_url: "{{ advanced.apt_keyring_url | default('https://download.docker.com/linux/debian/gpg') }}"
+        docker_apt_keyring_path: "{{ advanced.apt_keyring_path | default('/usr/share/keyrings/docker-archive-keyring.gpg') }}"
+        docker_apt_keyring_hash: "{{ advanced.apt_keyring_hash | default('1500c1f56fa9e26b9b8f42452a553675796ade0807cdce11975eb98170b3a570') }}"
+        docker_apt_repo_url: "{{ advanced.apt_repo_url | default('https://download.docker.com/linux/debian') }}"
+        docker_yum_gpg_url: "{{ advanced.yum_gpg_url | default('https://download.docker.com/linux/fedora/gpg') }}"
+        docker_yum_repo_url: "{{ advanced.yum_repo_url | default('https://download.docker.com/linux/fedora') }}"
+        docker_service_enabled: "{{ advanced.docker_service_enabled | default(true) }}"
+        docker_service_state: "{{ advanced.docker_service_state | default('started') }}"
+        docker_verify_installation: "{{ advanced.verify_installation | default(true) }}"
+      when: docker is defined
+      tags: always
   
   roles:
     - role: ../roles/docker

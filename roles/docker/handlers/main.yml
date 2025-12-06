@@ -1,0 +1,17 @@
+---
+# ==============================================================================
+# Docker Role Handlers
+# ==============================================================================
+# Handlers for Docker service management
+
+- name: Restart docker
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+  listen: "restart docker"
+
+- name: Reload docker
+  ansible.builtin.service:
+    name: docker
+    state: reloaded
+  listen: "reload docker"
